@@ -8,7 +8,7 @@ const GameState = enum {
     ending,
 };
 
-pub const Game = struct {
+pub const World = struct {
     screen_width: i32,
     screen_height: i32,
     state: GameState = GameState.logo,
@@ -17,11 +17,19 @@ pub const Game = struct {
     const Self = @This();
 
     pub fn init(screen_width: i32, screen_height: i32) Self {
+        rl.setTraceLogLevel(rl.TraceLogLevel.log_warning);
+        rl.initWindow(screen_width, screen_height, "Asteroids Redux Redux");
+        rl.setTargetFPS(60);
+
         return Self{
             .screen_width = screen_width,
             .screen_height = screen_height,
             .logo = LogoData.init(screen_width, screen_height),
         };
+    }
+
+    pub fn deinit(_: Self) void {
+        rl.closeWindow();
     }
 
     fn updateLogo(self: *Self) void {

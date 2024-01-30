@@ -1,25 +1,21 @@
 const rl = @import("raylib");
 const AssetManager = @import("asset_manager.zig").AssetManager;
-const Game = @import("world.zig").Game;
+const World = @import("world.zig").World;
 const Movement = @import("movement.zig").Movement;
 const Transform = @import("transform.zig").Transform;
 const Render = @import("render.zig").Render;
 const Spaceship = @import("spaceship.zig").Spaceship;
 
-pub fn main() !void {
-    // TODO: have setup all in Game struct if possible
-    rl.setTraceLogLevel(rl.TraceLogLevel.log_warning);
+pub fn main() void {
     const width = 800;
     const height = 600;
-    rl.initWindow(width, height, "Asteroids Redux Redux");
-    defer rl.closeWindow();
-    rl.setTargetFPS(60);
 
-    var game = Game.init(width, height);
+    var game = World.init(width, height);
+    defer game.deinit();
 
     const movement = Movement.init(rl.Vector2.init(50.0, 50.0), rl.Vector2.init(1.0, 1.0), 100.0);
     const transform = Transform.init(rl.Vector2.init(1.0, 1.0), rl.Vector2.init(0.0, 0.0), 0.0);
-    const render = Render.init(transform, rl.Color.blue, null);
+    const render = Render.init(transform, rl.Color.blue, rl.loadTexture("assets/ship1.png"));
 
     var spaceship = Spaceship.init(movement, transform, render);
 
