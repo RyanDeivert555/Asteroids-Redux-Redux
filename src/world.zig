@@ -17,7 +17,7 @@ pub const World = struct {
     const Self = @This();
 
     pub fn init(screen_width: i32, screen_height: i32) Self {
-        rl.setTraceLogLevel(rl.TraceLogLevel.log_warning);
+        rl.setTraceLogLevel(.log_warning);
         rl.initWindow(screen_width, screen_height, "Asteroids Redux Redux");
         rl.setTargetFPS(60);
 
